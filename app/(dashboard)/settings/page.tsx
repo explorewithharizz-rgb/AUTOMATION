@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { COMMON_TIMEZONES } from "@/lib/utils/timezone";
-import { Settings as SettingsIcon, Check, Loader2, Globe, User, Shield } from "lucide-react";
+import { Settings as SettingsIcon, Check, Loader2, Globe, User, Shield, Palette } from "lucide-react";
+import { ThemeSelector } from "@/components/ThemeToggle";
 
 export default function SettingsPage() {
   const [displayName, setDisplayName] = useState("");
@@ -63,6 +64,18 @@ export default function SettingsPage() {
       </div>
 
       <form onSubmit={handleSave} className="space-y-6">
+        {/* Appearance & Theme Card */}
+        <div className="glass-card rounded-2xl p-6 border border-gray-200 dark:border-[#1E2230] space-y-4">
+          <h2 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+            <Palette className="w-4 h-4 text-indigo-500" />
+            <span>Appearance & Theme</span>
+          </h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Choose your preferred theme across the entire BEWEB Social Automation dashboard.
+          </p>
+          <ThemeSelector />
+        </div>
+
         {/* Profile Card */}
         <div className="glass-card rounded-2xl p-6 border border-[#1E2230] space-y-4">
           <h2 className="text-sm font-semibold text-white uppercase tracking-wider flex items-center gap-2">

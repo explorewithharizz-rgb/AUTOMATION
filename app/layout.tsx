@@ -15,18 +15,51 @@ export const metadata: Metadata = {
   },
 };
 
+import { ThemeProvider } from "@/components/ThemeProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning className="dark">
       <head>
         <meta name="google-site-verification" content={googleVerificationCode} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('beweb_theme');
+                  var isDark = true;
+                  if (stored === 'light') {
+                    isDark = false;
+                  } else if (stored === 'system') {
+                    isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  } else if (stored === 'dark') {
+                    isDark = true;
+                  }
+                  var root = document.documentElement;
+                  if (isDark) {
+                    root.classList.add('dark');
+                    root.classList.remove('light');
+                    root.setAttribute('data-theme', 'dark');
+                    root.style.colorScheme = 'dark';
+                  } else {
+                    root.classList.remove('dark');
+                    root.classList.add('light');
+                    root.setAttribute('data-theme', 'light');
+                    root.style.colorScheme = 'light';
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
       </head>
-      <body className="bg-background text-gray-100 min-h-screen antialiased selection:bg-indigo-500/30 selection:text-indigo-200">
-        {children}
+      <body className="bg-background text-foreground min-h-screen antialiased selection:bg-indigo-500/30 selection:text-indigo-200 transition-colors duration-200">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

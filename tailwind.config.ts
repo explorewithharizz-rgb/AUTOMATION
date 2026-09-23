@@ -10,10 +10,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#090A0F",
-        surface: "#11131A",
-        surfaceBorder: "#1E2230",
-        surfaceHover: "#181B26",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        surface: "var(--surface)",
+        surfaceBorder: "var(--surface-border)",
+        surfaceHover: "var(--surface-hover)",
+        surfaceCard: "var(--surface-card)",
+        textMuted: "var(--foreground-muted)",
         brand: {
           50: "#eef2ff",
           100: "#e0e7ff",

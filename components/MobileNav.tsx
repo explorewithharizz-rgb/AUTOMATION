@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Share2, Video, ListVideo, Calendar, Layers, Settings, Youtube } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const NAV_ITEMS = [
   { label: "Create", href: "/dashboard", icon: Video },
@@ -19,15 +20,16 @@ export function MobileNav() {
   return (
     <>
       {/* Top Mobile Bar */}
-      <div className="md:hidden flex items-center justify-between p-4 border-b border-[#1E2230] bg-[#0D0F17] sticky top-0 z-40">
+      <div className="md:hidden flex items-center justify-between p-4 border-b border-gray-200 dark:border-[#1E2230] bg-white/90 dark:bg-[#0D0F17]/90 backdrop-blur-md sticky top-0 z-40">
         <Link href="/dashboard" className="flex items-center gap-2">
           <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-600">
             <Share2 className="w-4 h-4 text-white" />
           </div>
-          <span className="text-sm font-bold text-white tracking-tight">
+          <span className="text-sm font-bold text-gray-900 dark:text-white tracking-tight">
             BEWEB Social Automation
           </span>
         </Link>
+        <ThemeToggle />
       </div>
 
       {/* Bottom Mobile Tab Bar */}
