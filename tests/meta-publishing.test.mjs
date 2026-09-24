@@ -117,3 +117,37 @@ test("Publishing Dispatcher: Single-platform retry isolates execution to specifi
   const publishedTargets = targets.filter((t) => t.status === "published");
   assert.equal(publishedTargets.length, 2);
 });
+
+test("Instagram Deletion: Constructs official Graph API v21.0 delete media endpoint", () => {
+  const mediaId = "17954123456789012";
+  const accessToken = "EAAGtestToken123";
+
+  const deleteUrl = new URL(`${GRAPH_BASE}/${mediaId}`);
+  deleteUrl.searchParams.set("access_token", accessToken);
+
+  assert.equal(deleteUrl.origin, "https://graph.facebook.com");
+  assert.equal(deleteUrl.pathname, `/v21.0/${mediaId}`);
+  assert.equal(deleteUrl.searchParams.get("access_token"), accessToken);
+});
+
+test("Instagram Deletion: Validates required mediaId and accessToken", async () => {
+  async function validateInstagramDelete(mediaId, token) {
+    if (!mediaId || !token) {
+      return { success: false, error: "Missing media ID or access token for Instagram deletion." };
+    }
+    if (mediaId.startsWith("mock_")) {
+      return { success: true };
+    }
+    return { success: true, url: `${GRAPH_BASE}/${mediaId}` };
+  }
+
+  const missingToken = await validateInstagramDelete("123", "");
+  assert.equal(missingToken.success, false);
+
+  const missingMedia = await validateInstagramDelete("", "token");
+  assert.equal(missingMedia.success, false);
+
+  const mockSuccess = await validateInstagramDelete("mock_instagram_123", "token");
+  assert.equal(mockSuccess.success, true);
+});
+

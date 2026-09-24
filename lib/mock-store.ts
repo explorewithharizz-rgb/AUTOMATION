@@ -103,6 +103,12 @@ export const mockStore = {
   deletePost: (id: string) => {
     globalStore.posts = globalStore.posts.filter((p) => p.id !== id);
   },
+  deleteTarget: (postId: string, targetId: string) => {
+    const post = globalStore.posts.find((p) => p.id === postId);
+    if (post && post.targets) {
+      post.targets = post.targets.filter((t) => t.id !== targetId);
+    }
+  },
   getAccounts: (userId?: string) =>
     userId ? globalStore.accounts.filter((a) => a.user_id === userId) : [],
   upsertAccount: (account: SocialAccount) => {

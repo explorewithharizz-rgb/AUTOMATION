@@ -141,8 +141,23 @@ export async function DELETE(
               platformErrors.push(`YouTube Exception: ${err.message}`);
             }
           } else if (target.platform === "instagram") {
-            // Meta Graph API intentionally does not support deleting published Instagram media via third-party API.
-            console.log("[Post Delete] Note: Instagram media cannot be deleted via API per Meta security policies.");
+            try {
+              if (target.platform_post_id.startsWith("mock_") || isMockMode()) {
+                console.log(`[Post Delete] Mock Instagram media ${target.platform_post_id} deleted.`);
+              } else {
+                const metaConn = await getConnectedMetaAccount(user.id);
+                if (metaConn?.decryptedPageToken) {
+                  const { deleteFromInstagram } = require("@/lib/platforms/instagram");
+                  const result = await deleteFromInstagram(target.platform_post_id, metaConn.decryptedPageToken);
+                  if (!result.success) {
+                    console.error("IG Delete Error:", result.error);
+                    platformErrors.push(`Instagram: ${result.error}`);
+                  }
+                }
+              }
+            } catch (err: any) {
+              platformErrors.push(`Instagram Exception: ${err.message}`);
+            }
           }
         }
 
@@ -153,6 +168,8 @@ export async function DELETE(
         }
       }
     }
+
+    mockStore.deletePost(id);
 
     if (postData?.video_storage_path) {
       await adminSupabase.storage

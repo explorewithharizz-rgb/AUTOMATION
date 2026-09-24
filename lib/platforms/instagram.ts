@@ -258,3 +258,51 @@ async function pollInstagramContainerStatus(
 
   return { ready: false, error: "Timed out waiting for Instagram video processing" };
 }
+
+/**
+ * Deletes published media from Instagram via the Meta Graph API.
+ * Endpoint: DELETE https://graph.facebook.com/v21.0/{mediaId}?access_token={accessToken}
+ */
+export async function deleteFromInstagram(
+  mediaId: string,
+  accessToken: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    if (mediaId.startsWith("mock_")) {
+      console.log(`[Instagram Delete] Mock Instagram media ${mediaId} deleted successfully.`);
+      return { success: true };
+    }
+
+    if (!mediaId || !accessToken) {
+      return {
+        success: false,
+        error: "Missing media ID or access token for Instagram deletion.",
+      };
+    }
+
+    const res = await fetch(`${META_GRAPH_BASE}/${mediaId}?access_token=${accessToken}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error(`[Instagram Delete] Failed to delete media ${mediaId}:`, errText);
+      let errMsg = `Instagram API Error (${res.status}): ${errText}`;
+      try {
+        const parsed = JSON.parse(errText);
+        if (parsed.error?.message) {
+          errMsg = parsed.error.message;
+        }
+      } catch {}
+      return { success: false, error: errMsg };
+    }
+
+    const data = await res.json().catch(() => ({ success: true }));
+    console.log(`[Instagram Delete] Successfully deleted Instagram media ${mediaId}:`, data);
+    return { success: true };
+  } catch (err: any) {
+    console.error("[Instagram Delete] Exception:", err);
+    return { success: false, error: err.message || "Failed to delete Instagram media" };
+  }
+}
+

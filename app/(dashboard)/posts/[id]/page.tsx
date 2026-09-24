@@ -132,7 +132,7 @@ export default function PostDetailPage() {
     if (!confirm("Are you sure you want to delete this post from your dashboard?")) return;
     
     const deleteFromPlatforms = confirm(
-      "Do you ALSO want to permanently delete this video from Facebook and YouTube?\n\n(Note: Instagram does not allow third-party apps to delete posts, so Instagram Reels must be deleted manually from your phone.)\n\nClick OK to delete from FB & YouTube, or Cancel to only delete from the dashboard."
+      "Do you ALSO want to permanently delete this video from connected social platforms (Instagram, Facebook, and YouTube)?\n\nClick OK to delete from Instagram, Facebook & YouTube, or Cancel to only delete from the dashboard."
     );
 
     try {
