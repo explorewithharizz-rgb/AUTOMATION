@@ -96,15 +96,22 @@ html:not(.dark) .bg-\[\#11131a\] {
   background-color: #ffffff !important;
 }
 
+html:not(.dark) .bg-\[\#141722\],
+html:not(.dark) .bg-\[\#141620\],
+html:not(.dark) .bg-\[\#141724\],
 html:not(.dark) .bg-\[\#151824\],
 html:not(.dark) .bg-\[\#181B26\],
 html:not(.dark) .hover\:bg-\[\#151824\]:hover,
 html:not(.dark) .hover\:bg-\[\#181B26\]:hover {
-  background-color: #f1f5f9 !important;
+  background-color: #f8fafc !important;
 }
 
 html:not(.dark) .border-\[\#1E2230\],
-html:not(.dark) .border-\[\#1e2230\] {
+html:not(.dark) .border-\[\#1e2230\],
+html:not(.dark) .border-\[\#272D40\],
+html:not(.dark) .border-\[\#272d40\],
+html:not(.dark) .border-\[\#2A3045\],
+html:not(.dark) .border-\[\#2a3045\] {
   border-color: #e2e8f0 !important;
 }
 
@@ -133,26 +140,85 @@ html:not(.dark) h1.text-white,
 html:not(.dark) h2.text-white,
 html:not(.dark) h3.text-white,
 html:not(.dark) h4.text-white,
+html:not(.dark) h5.text-white,
+html:not(.dark) h6.text-white,
 html:not(.dark) p.text-white,
 html:not(.dark) label.text-white,
-html:not(.dark) span.text-white:not(.bg-indigo-600 *):not(.bg-gradient-to-tr *):not([class*="bg-red"] *):not([class*="bg-green"] *):not([class*="bg-blue"] *):not([class*="bg-amber"] *):not([class*="bg-violet"] *) {
+html:not(.dark) div.text-white:not(.bg-indigo-600 *):not(.bg-gradient-to-r *):not([class*="bg-red"] *):not([class*="bg-blue"] *):not([class*="bg-pink"] *),
+html:not(.dark) span.text-white:not(.bg-indigo-600 *):not(.bg-gradient-to-tr *):not(.bg-gradient-to-r *):not([class*="bg-red"] *):not([class*="bg-green"] *):not([class*="bg-blue"] *):not([class*="bg-amber"] *):not([class*="bg-violet"] *) {
   color: #0f172a !important;
 }
 
-html:not(.dark) .text-gray-100:not(.bg-indigo-600 *):not(.bg-gradient-to-tr *) {
+html:not(.dark) .text-gray-100:not(.bg-indigo-600 *):not(.bg-gradient-to-tr *):not(.bg-gradient-to-r *) {
   color: #0f172a !important;
 }
 
-html:not(.dark) .text-gray-200:not(.bg-indigo-600 *):not(.bg-gradient-to-tr *) {
+html:not(.dark) .text-gray-200:not(.bg-indigo-600 *):not(.bg-gradient-to-tr *):not(.bg-gradient-to-r *) {
   color: #1e293b !important;
 }
 
-html:not(.dark) .text-gray-300:not(.bg-indigo-600 *):not(.bg-gradient-to-tr *) {
+html:not(.dark) .text-gray-300:not(.bg-indigo-600 *):not(.bg-gradient-to-tr *):not(.bg-gradient-to-r *) {
   color: #334155 !important;
 }
 
-html:not(.dark) .text-gray-400:not(.bg-indigo-600 *):not(.bg-gradient-to-tr *) {
-  color: #64748b !important;
+html:not(.dark) .text-gray-400:not(.bg-indigo-600 *):not(.bg-gradient-to-tr *):not(.bg-gradient-to-r *) {
+  color: #475569 !important;
+}
+
+/* Platform-specific brand accents with high contrast in both themes */
+.platform-pill-youtube {
+  color: #dc2626 !important;
+  background-color: rgba(239, 68, 68, 0.12) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+.dark .platform-pill-youtube {
+  color: #f87171 !important;
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+}
+
+.platform-pill-facebook {
+  color: #2563eb !important;
+  background-color: rgba(37, 99, 235, 0.12) !important;
+  border-color: rgba(37, 99, 235, 0.3) !important;
+}
+.dark .platform-pill-facebook {
+  color: #60a5fa !important;
+  background-color: rgba(37, 99, 235, 0.15) !important;
+  border-color: rgba(37, 99, 235, 0.4) !important;
+}
+
+.platform-pill-instagram {
+  color: #db2777 !important;
+  background-color: rgba(219, 39, 119, 0.12) !important;
+  border-color: rgba(219, 39, 119, 0.3) !important;
+}
+.dark .platform-pill-instagram {
+  color: #f472b6 !important;
+  background-color: rgba(219, 39, 119, 0.15) !important;
+  border-color: rgba(219, 39, 119, 0.4) !important;
+}
+
+.platform-pill-snapchat {
+  color: #d97706 !important;
+  background-color: rgba(245, 158, 11, 0.12) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+.dark .platform-pill-snapchat {
+  color: #fbbf24 !important;
+  background-color: rgba(245, 158, 11, 0.15) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+}
+
+.platform-pill-sharechat {
+  color: #0d9488 !important;
+  background-color: rgba(20, 184, 166, 0.12) !important;
+  border-color: rgba(20, 184, 166, 0.3) !important;
+}
+.dark .platform-pill-sharechat {
+  color: #2dd4bf !important;
+  background-color: rgba(20, 184, 166, 0.15) !important;
+  border-color: rgba(20, 184, 166, 0.4) !important;
 }
 
 /* Light mode form input styling */
@@ -168,3 +234,4 @@ html:not(.dark) input::placeholder,
 html:not(.dark) textarea::placeholder {
   color: #94a3b8 !important;
 }
+

@@ -12,6 +12,8 @@ import {
   Instagram,
   Facebook,
   Youtube,
+  Ghost,
+  Share2,
   ArrowRight,
   Plus,
   RefreshCw,
@@ -156,28 +158,30 @@ export default function PostsPage() {
             const hasInstagram = post.targets?.some((t) => t.platform === "instagram");
             const hasFacebook = post.targets?.some((t) => t.platform === "facebook");
             const hasYoutube = post.targets?.some((t) => t.platform === "youtube");
+            const hasSnapchat = post.targets?.some((t) => t.platform === "snapchat");
+            const hasSharechat = post.targets?.some((t) => t.platform === "sharechat");
 
             return (
               <Link
                 key={post.id}
                 href={`/posts/${post.id}`}
-                className="glass-card rounded-2xl p-4 sm:p-5 border border-[#1E2230] hover:border-indigo-500/40 hover:bg-[#151824] transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+                className="glass-card rounded-2xl p-4 sm:p-5 border border-gray-200 dark:border-[#1E2230] hover:border-indigo-500/40 hover:bg-gray-50/80 dark:hover:bg-[#151824] transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 group shadow-sm"
               >
                 {/* Left info */}
                 <div className="flex items-start gap-4 min-w-0">
-                  <div className="w-14 h-16 rounded-xl bg-[#181B26] border border-[#272D40] flex items-center justify-center flex-shrink-0 text-gray-500">
-                    <Film className="w-6 h-6 text-indigo-400" />
+                  <div className="w-14 h-16 rounded-xl bg-gray-100 dark:bg-[#181B26] border border-gray-200 dark:border-[#272D40] flex items-center justify-center flex-shrink-0 text-gray-500 shadow-xs">
+                    <Film className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-white truncate max-w-md">
+                    <p className="text-sm font-bold text-gray-900 dark:text-white truncate max-w-md">
                       {post.caption}
                     </p>
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-gray-400 mt-1">
-                      <span>{post.video_filename}</span>
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      <span className="font-medium">{post.video_filename}</span>
                       <span>•</span>
                       <span>
                         {post.post_mode === "scheduled" && post.scheduled_at ? (
-                          <span className="text-indigo-400 flex items-center gap-1 inline-flex">
+                          <span className="text-indigo-600 dark:text-indigo-400 flex items-center gap-1 inline-flex font-semibold">
                             <Calendar className="w-3 h-3" />
                             {formatInTimezone(post.scheduled_at, post.timezone)}
                           </span>
@@ -187,21 +191,36 @@ export default function PostsPage() {
                       </span>
                     </div>
 
-                    {/* Platform icons */}
-                    <div className="flex items-center gap-2 mt-2.5">
-                      {hasInstagram && (
-                        <span className="p-1 rounded bg-pink-500/10 text-pink-400" title="Instagram">
-                          <Instagram className="w-3.5 h-3.5" />
+                    {/* Platform badges with visible names & brand colors */}
+                    <div className="flex flex-wrap items-center gap-2 mt-2.5">
+                      {hasYoutube && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-50 text-red-700 border border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/30 shadow-2xs">
+                          <Youtube className="w-3 h-3 text-red-600 dark:text-red-400" />
+                          <span>YouTube</span>
                         </span>
                       )}
                       {hasFacebook && (
-                        <span className="p-1 rounded bg-blue-500/10 text-blue-400" title="Facebook">
-                          <Facebook className="w-3.5 h-3.5" />
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/30 shadow-2xs">
+                          <Facebook className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+                          <span>Facebook</span>
                         </span>
                       )}
-                      {hasYoutube && (
-                        <span className="p-1 rounded bg-red-500/10 text-red-400" title="YouTube">
-                          <Youtube className="w-3.5 h-3.5" />
+                      {hasInstagram && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-pink-50 text-pink-700 border border-pink-200 dark:bg-pink-500/10 dark:text-pink-400 dark:border-pink-500/30 shadow-2xs">
+                          <Instagram className="w-3 h-3 text-pink-600 dark:text-pink-400" />
+                          <span>Instagram</span>
+                        </span>
+                      )}
+                      {hasSnapchat && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30 shadow-2xs">
+                          <Ghost className="w-3 h-3 text-amber-600 dark:text-amber-400" />
+                          <span>Snapchat</span>
+                        </span>
+                      )}
+                      {hasSharechat && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-teal-50 text-teal-700 border border-teal-200 dark:bg-teal-500/10 dark:text-teal-400 dark:border-teal-500/30 shadow-2xs">
+                          <Share2 className="w-3 h-3 text-teal-600 dark:text-teal-400" />
+                          <span>ShareChat</span>
                         </span>
                       )}
                     </div>
@@ -209,9 +228,9 @@ export default function PostsPage() {
                 </div>
 
                 {/* Right status */}
-                <div className="flex items-center justify-between sm:justify-end gap-4 self-stretch sm:self-center pt-2 sm:pt-0 border-t sm:border-t-0 border-[#1E2230]">
+                <div className="flex items-center justify-between sm:justify-end gap-4 self-stretch sm:self-center pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100 dark:border-[#1E2230]">
                   <PostStatusBadge status={post.status} />
-                  <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
+                  <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all" />
                 </div>
               </Link>
             );

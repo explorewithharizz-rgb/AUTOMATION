@@ -1,6 +1,6 @@
 "use client";
 
-import { Instagram, Facebook, Youtube, Film } from "lucide-react";
+import { Instagram, Facebook, Youtube, Ghost, Share2, Film } from "lucide-react";
 import { Platform } from "@/types";
 
 interface VideoPreviewProps {
@@ -65,43 +65,62 @@ export function VideoPreview({
       </div>
 
       {/* Target Platforms Indicator Below Preview */}
-      <div className="mt-5 text-center">
-        <p className="text-xs font-medium text-gray-400 mb-2">
+      <div className="mt-5 text-center w-full">
+        <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2.5">
           Your video will be posted to:
         </p>
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          {/* Instagram */}
           <div
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold transition-all ${
               selectedPlatforms.includes("instagram")
-                ? "bg-pink-500/10 border-pink-500/30 text-pink-400"
-                : "bg-[#141722] border-[#1E2230] text-gray-600 opacity-40"
+                ? "bg-pink-50 text-pink-700 border-pink-300 dark:bg-pink-500/15 dark:border-pink-500/30 dark:text-pink-400 shadow-sm"
+                : "bg-gray-100 text-gray-400 border-gray-200 dark:bg-[#141722] dark:border-[#1E2230] dark:text-gray-600 opacity-40"
             }`}
           >
-            <Instagram className="w-3.5 h-3.5" />
+            <Instagram className="w-3.5 h-3.5 text-pink-600 dark:text-pink-400" />
             <span>Instagram</span>
           </div>
 
+          {/* Facebook */}
           <div
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold transition-all ${
               selectedPlatforms.includes("facebook")
-                ? "bg-blue-500/10 border-blue-500/30 text-blue-400"
-                : "bg-[#141722] border-[#1E2230] text-gray-600 opacity-40"
+                ? "bg-blue-50 text-blue-700 border-blue-300 dark:bg-blue-500/15 dark:border-blue-500/30 dark:text-blue-400 shadow-sm"
+                : "bg-gray-100 text-gray-400 border-gray-200 dark:bg-[#141722] dark:border-[#1E2230] dark:text-gray-600 opacity-40"
             }`}
           >
-            <Facebook className="w-3.5 h-3.5" />
+            <Facebook className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
             <span>Facebook</span>
           </div>
 
+          {/* YouTube */}
           <div
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold transition-all ${
               selectedPlatforms.includes("youtube")
-                ? "bg-red-500/10 border-red-500/30 text-red-400"
-                : "bg-[#141722] border-[#1E2230] text-gray-600 opacity-40"
+                ? "bg-red-50 text-red-700 border-red-300 dark:bg-red-500/15 dark:border-red-500/30 dark:text-red-400 shadow-sm"
+                : "bg-gray-100 text-gray-400 border-gray-200 dark:bg-[#141722] dark:border-[#1E2230] dark:text-gray-600 opacity-40"
             }`}
           >
-            <Youtube className="w-3.5 h-3.5" />
+            <Youtube className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
             <span>YouTube</span>
           </div>
+
+          {/* Snapchat */}
+          {selectedPlatforms.includes("snapchat") && (
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold bg-amber-50 text-amber-700 border-amber-300 dark:bg-amber-500/15 dark:border-amber-500/30 dark:text-amber-400 shadow-sm">
+              <Ghost className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+              <span>Snapchat</span>
+            </div>
+          )}
+
+          {/* ShareChat */}
+          {selectedPlatforms.includes("sharechat") && (
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold bg-teal-50 text-teal-700 border-teal-300 dark:bg-teal-500/15 dark:border-teal-500/30 dark:text-teal-400 shadow-sm">
+              <Share2 className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
+              <span>ShareChat</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

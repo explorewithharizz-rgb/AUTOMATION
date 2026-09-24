@@ -23,42 +23,42 @@ export function PostStatusBadge({ status }: { status: PostStatus }) {
   switch (status) {
     case "completed":
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
-          <CheckCircle2 className="w-3.5 h-3.5" />
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 dark:bg-emerald-500/10 dark:border-emerald-500/30 dark:text-emerald-400 shadow-sm">
+          <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
           <span>Published</span>
         </span>
       );
     case "partial":
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 border border-amber-500/30 text-amber-400">
-          <AlertCircle className="w-3.5 h-3.5" />
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-300 dark:bg-amber-500/10 dark:border-amber-500/30 dark:text-amber-400 shadow-sm">
+          <AlertCircle className="w-3.5 h-3.5 stroke-[2.5]" />
           <span>Action Required / Partial</span>
         </span>
       );
     case "failed":
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-500/10 border border-red-500/30 text-red-400">
-          <AlertCircle className="w-3.5 h-3.5" />
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-50 text-red-700 border border-red-300 dark:bg-red-500/10 dark:border-red-500/30 dark:text-red-400 shadow-sm">
+          <AlertCircle className="w-3.5 h-3.5 stroke-[2.5]" />
           <span>Failed</span>
         </span>
       );
     case "publishing":
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-500/10 border border-indigo-500/30 text-indigo-400">
-          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-300 dark:bg-indigo-500/10 dark:border-indigo-500/30 dark:text-indigo-400 shadow-sm animate-pulse">
+          <Loader2 className="w-3.5 h-3.5 animate-spin stroke-[2.5]" />
           <span>Publishing</span>
         </span>
       );
     case "queued":
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-500/10 border border-gray-500/30 text-gray-300">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-300 dark:bg-gray-500/10 dark:border-gray-500/30 dark:text-gray-300">
           <Clock className="w-3.5 h-3.5" />
           <span>Queued</span>
         </span>
       );
     default:
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-800 text-gray-400">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400">
           {status}
         </span>
       );
@@ -107,23 +107,23 @@ export function TargetStatusItem({
   const getIcon = () => {
     switch (platform) {
       case "instagram":
-        return <Instagram className="w-4 h-4 text-pink-400" />;
+        return <Instagram className="w-4 h-4 text-pink-600 dark:text-pink-400" />;
       case "facebook":
-        return <Facebook className="w-4 h-4 text-blue-400" />;
+        return <Facebook className="w-4 h-4 text-blue-600 dark:text-blue-400" />;
       case "youtube":
-        return <Youtube className="w-4 h-4 text-red-400" />;
+        return <Youtube className="w-4 h-4 text-red-600 dark:text-red-400" />;
       case "snapchat":
-        return <Ghost className="w-4 h-4 text-yellow-400" />;
+        return <Ghost className="w-4 h-4 text-amber-600 dark:text-amber-400" />;
       case "sharechat":
-        return <Share2 className="w-4 h-4 text-teal-400" />;
+        return <Share2 className="w-4 h-4 text-teal-600 dark:text-teal-400" />;
     }
   };
 
   const getStatusDisplay = () => {
     if (status === "action_required" || actionRequired) {
       return (
-        <span className="flex items-center gap-1 text-xs text-amber-300 font-medium">
-          <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+        <span className="flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-300 font-bold">
+          <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 stroke-[2.5]" />
           <span>
             {platform === "snapchat"
               ? "Action required: Finish sharing in Snapchat"
@@ -138,11 +138,15 @@ export function TargetStatusItem({
     switch (status) {
       case "published":
         return (
-          <span className="flex items-center gap-1 text-xs text-emerald-400 font-medium">
-            <CheckCircle2 className="w-3.5 h-3.5" />
+          <span className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
+            <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>
               {platform === "youtube"
                 ? "Published to YouTube"
+                : platform === "facebook"
+                ? "Published to Facebook"
+                : platform === "instagram"
+                ? "Published to Instagram"
                 : platform === "snapchat"
                 ? "Published to Snapchat"
                 : platform === "sharechat"
@@ -154,28 +158,28 @@ export function TargetStatusItem({
       case "uploading":
       case "processing":
         return (
-          <span className="flex items-center gap-1 text-xs text-indigo-400 font-medium">
-            <Loader2 className="w-3.5 h-3.5 animate-spin" />
-            {status === "uploading" ? "Uploading..." : "Processing..."}
+          <span className="flex items-center gap-1.5 text-xs text-indigo-600 dark:text-indigo-400 font-bold animate-pulse">
+            <Loader2 className="w-3.5 h-3.5 animate-spin stroke-[2.5]" />
+            {status === "uploading" ? `Uploading to ${platform}...` : "Processing & Publishing..."}
           </span>
         );
       case "failed":
         return (
-          <span className="flex items-center gap-1 text-xs text-red-400 font-medium">
-            <AlertCircle className="w-3.5 h-3.5" />
+          <span className="flex items-center gap-1.5 text-xs text-red-600 dark:text-red-400 font-bold">
+            <AlertCircle className="w-3.5 h-3.5 stroke-[2.5]" />
             Failed
           </span>
         );
       case "queued":
         return (
-          <span className="flex items-center gap-1 text-xs text-gray-400 font-medium">
+          <span className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400 font-semibold">
             <Clock className="w-3.5 h-3.5" />
             Queued
           </span>
         );
       default:
         return (
-          <span className="flex items-center gap-1 text-xs text-gray-400 font-medium">
+          <span className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400 font-semibold">
             {status}
           </span>
         );
@@ -201,32 +205,32 @@ export function TargetStatusItem({
 
   return (
     <>
-      <div className="p-3.5 rounded-xl bg-[#181B26] border border-[#272D40] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-[#11131A] border border-[#2A3045] flex items-center justify-center flex-shrink-0">
+      <div className="p-4 rounded-xl bg-white dark:bg-[#181B26] border border-gray-200 dark:border-[#272D40] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-9 h-9 rounded-xl bg-gray-100 dark:bg-[#11131A] border border-gray-200 dark:border-[#2A3045] flex items-center justify-center flex-shrink-0 shadow-xs">
             {channelProfileImage && platform === "youtube" ? (
               <img
                 src={channelProfileImage}
                 alt="Channel"
-                className="w-8 h-8 rounded-lg object-cover"
+                className="w-9 h-9 rounded-xl object-cover"
               />
             ) : (
               getIcon()
             )}
           </div>
-          <div>
-            <h5 className="text-xs font-semibold text-white capitalize">
+          <div className="min-w-0">
+            <h5 className="text-xs font-bold text-gray-900 dark:text-white capitalize tracking-wide">
               {platform}
             </h5>
             <div className="mt-0.5">{getStatusDisplay()}</div>
             {status === "published" && platform === "youtube" && channelName && (
-              <div className="mt-1 text-[11px] text-gray-300">
-                Channel: <span className="font-semibold text-white">{channelName}</span>
+              <div className="mt-1 text-[11px] text-gray-600 dark:text-gray-300">
+                Channel: <span className="font-bold text-gray-900 dark:text-white">{channelName}</span>
               </div>
             )}
             {status === "published" && ytVideoId && (
-              <div className="mt-0.5 text-[11px] font-mono text-gray-400">
-                Video ID: <span className="font-bold text-emerald-400">{ytVideoId}</span>
+              <div className="mt-0.5 text-[11px] font-mono text-gray-500 dark:text-gray-400">
+                Video ID: <span className="font-bold text-emerald-600 dark:text-emerald-400">{ytVideoId}</span>
               </div>
             )}
           </div>
@@ -242,7 +246,7 @@ export function TargetStatusItem({
               }
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-500/40 text-xs font-semibold text-yellow-300 transition-colors shadow-sm"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-xs font-bold text-amber-700 dark:text-yellow-300 transition-colors shadow-sm"
             >
               <Ghost className="w-3.5 h-3.5" />
               <span>Continue sharing to Snapchat</span>
@@ -255,7 +259,7 @@ export function TargetStatusItem({
             <button
               type="button"
               onClick={() => setShowShareModal(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 border border-teal-500/40 text-xs font-semibold text-teal-300 transition-colors shadow-sm"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 border border-teal-500/40 text-xs font-bold text-teal-700 dark:text-teal-300 transition-colors shadow-sm"
             >
               <Share2 className="w-3.5 h-3.5" />
               <span>Open ShareChat to finish posting</span>
@@ -268,7 +272,7 @@ export function TargetStatusItem({
               href={platformUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#11131A] hover:bg-[#1E2230] border border-[#272D40] text-xs font-medium text-indigo-300 hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-[#11131A] dark:hover:bg-[#1E2230] border border-gray-200 dark:border-[#272D40] text-xs font-bold text-indigo-600 dark:text-indigo-300 hover:text-indigo-700 dark:hover:text-white transition-colors shadow-xs"
             >
               <span>{platform === "youtube" ? "Open on YouTube" : "View Post"}</span>
               <ExternalLink className="w-3 h-3" />
@@ -280,20 +284,20 @@ export function TargetStatusItem({
               type="button"
               onClick={onRetry}
               disabled={isRetrying}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-xs font-medium text-red-400 hover:text-red-300 transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-xs font-semibold text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors disabled:opacity-50"
             >
               <RefreshCw className={`w-3 h-3 ${isRetrying ? "animate-spin" : ""}`} />
               <span>Retry</span>
             </button>
           )}
 
-          {onDelete && status === "published" && platform !== "instagram" && (
+          {onDelete && status === "published" && (
             <button
               type="button"
               onClick={onDelete}
               disabled={isDeleting}
-              title="Delete this post from the platform"
-              className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[#11131A] hover:bg-red-500/20 border border-[#272D40] hover:border-red-500/30 text-gray-500 hover:text-red-400 transition-colors disabled:opacity-50"
+              title={`Delete this post from ${platform}`}
+              className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-100 hover:bg-red-50 dark:bg-[#11131A] dark:hover:bg-red-500/20 border border-gray-200 dark:border-[#272D40] hover:border-red-300 dark:hover:border-red-500/30 text-gray-500 hover:text-red-600 dark:hover:text-red-400 transition-colors disabled:opacity-50"
             >
               {isDeleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
             </button>
@@ -301,7 +305,7 @@ export function TargetStatusItem({
         </div>
 
         {errorMessage && (
-          <div className="w-full mt-1 text-[11px] text-gray-300 bg-[#141722] p-2 rounded border border-[#272D40]">
+          <div className="w-full mt-1 text-xs text-red-700 dark:text-red-300 bg-red-50 dark:bg-[#141722] p-2.5 rounded-lg border border-red-200 dark:border-[#272D40]">
             {errorMessage}
           </div>
         )}

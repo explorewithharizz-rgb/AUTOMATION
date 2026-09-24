@@ -15,6 +15,7 @@ import {
   Share2,
   CheckCircle2,
   AlertTriangle,
+  Loader2,
 } from "lucide-react";
 
 export default function PostDetailPage() {
@@ -56,16 +57,17 @@ export default function PostDetailPage() {
   useEffect(() => {
     fetchPostDetails();
 
-    // Auto-poll if post is in flight
+    // Auto-poll frequently while post or targets are in flight so user immediately sees live processing -> published states
     const interval = setInterval(() => {
       if (
-        post?.status === "queued" ||
-        post?.status === "publishing" ||
-        post?.targets?.some((t) => t.status === "uploading" || t.status === "processing")
+        !post ||
+        post.status === "queued" ||
+        post.status === "publishing" ||
+        post.targets?.some((t) => t.status === "uploading" || t.status === "processing" || t.status === "queued")
       ) {
         fetchPostDetails();
       }
-    }, 2500);
+    }, 1500);
 
     return () => clearInterval(interval);
   }, [fetchPostDetails, post?.status, post?.targets]);
@@ -173,13 +175,22 @@ export default function PostDetailPage() {
     );
   }
 
+  const publishedCount = post?.targets?.filter((t) => t.status === "published").length || 0;
+  const totalTargets = post?.targets?.length || 0;
+  const isPostInFlight =
+    post?.status === "queued" ||
+    post?.status === "publishing" ||
+    Boolean(post?.targets?.some((t) => t.status === "uploading" || t.status === "processing" || t.status === "queued"));
+  const isAllPublished =
+    post?.status === "completed" || (totalTargets > 0 && publishedCount === totalTargets);
+
   return (
     <div className="space-y-6 max-w-4xl">
       {/* Top Navigation */}
       <div className="flex items-center justify-between">
         <Link
           href="/posts"
-          className="inline-flex items-center gap-2 text-xs font-medium text-gray-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to all posts</span>
@@ -190,32 +201,76 @@ export default function PostDetailPage() {
             type="button"
             onClick={fetchPostDetails}
             title="Refresh status"
-            className="p-2 rounded-lg bg-[#11131A] border border-[#1E2230] text-gray-400 hover:text-white transition-colors"
+            className="p-2 rounded-xl bg-white dark:bg-[#11131A] border border-gray-200 dark:border-[#1E2230] text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors shadow-2xs"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className={`w-4 h-4 ${isPostInFlight ? "animate-spin text-indigo-600 dark:text-indigo-400" : ""}`} />
           </button>
           <button
             type="button"
             onClick={handleDelete}
             title="Delete post"
-            className="p-2 rounded-lg bg-[#11131A] border border-[#1E2230] text-gray-400 hover:text-red-400 transition-colors"
+            className="p-2 rounded-xl bg-white dark:bg-[#11131A] border border-gray-200 dark:border-[#1E2230] text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors shadow-2xs"
           >
             <Trash2 className="w-4 h-4" />
           </button>
         </div>
       </div>
 
+      {/* Live In-Progress Status Banner */}
+      {isPostInFlight && !isAllPublished && (
+        <div className="p-4 rounded-2xl bg-indigo-50 border-2 border-indigo-200 dark:bg-indigo-950/30 dark:border-indigo-500/30 text-indigo-950 dark:text-indigo-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm animate-pulse">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-indigo-600/10 dark:bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
+              <Loader2 className="w-5 h-5 text-indigo-600 dark:text-indigo-400 animate-spin stroke-[2.5]" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-gray-900 dark:text-white">
+                Publishing to Platforms in Progress...
+              </p>
+              <p className="text-[11px] text-gray-600 dark:text-gray-300 font-medium">
+                {publishedCount} of {totalTargets} platform{totalTargets > 1 ? "s" : ""} published
+              </p>
+            </div>
+          </div>
+          <div className="w-full sm:w-48 bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden shadow-inner">
+            <div
+              className="bg-indigo-600 dark:bg-indigo-500 h-2 rounded-full transition-all duration-500"
+              style={{
+                width: `${Math.max(15, (publishedCount / (totalTargets || 1)) * 100)}%`,
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Celebration Banner When Fully Published */}
+      {isAllPublished && (
+        <div className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-200 dark:bg-emerald-950/30 dark:border-emerald-500/30 text-emerald-950 dark:text-emerald-200 flex items-center gap-3 shadow-sm">
+          <div className="w-9 h-9 rounded-xl bg-emerald-600/10 dark:bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 stroke-[2.5]" />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-gray-900 dark:text-white">
+              All Platforms Published Successfully!
+            </p>
+            <p className="text-[11px] text-gray-600 dark:text-gray-300 font-medium">
+              Your video is now live across your connected channels. Click "View Post" below to view them online.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Main Status Header Card */}
-      <div className="glass-card rounded-2xl p-6 border border-[#1E2230] space-y-4">
+      <div className="glass-card rounded-2xl p-6 border border-gray-200 dark:border-[#1E2230] space-y-4 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2.5 mb-1.5">
-              <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
                 Publishing Overview
               </h1>
               <PostStatusBadge status={post.status} />
             </div>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-gray-500 dark:text-gray-400">
               {post.post_mode === "scheduled" && post.scheduled_at
                 ? `Scheduled for ${formatInTimezone(post.scheduled_at, post.timezone)}`
                 : `Created on ${formatInTimezone(post.created_at, post.timezone)}`}
@@ -224,30 +279,30 @@ export default function PostDetailPage() {
         </div>
 
         {/* Video & Caption Summary */}
-        <div className="p-4 rounded-xl bg-[#181B26] border border-[#272D40] space-y-3">
-          <div className="flex items-center gap-2 text-xs text-gray-400">
-            <Film className="w-4 h-4 text-indigo-400" />
-            <span className="text-white font-medium">{post.video_filename}</span>
+        <div className="p-4 rounded-xl bg-gray-50 dark:bg-[#181B26] border border-gray-200 dark:border-[#272D40] space-y-3">
+          <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+            <Film className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+            <span className="text-gray-900 dark:text-white font-bold">{post.video_filename}</span>
             <span>•</span>
             <span>{(post.video_size / (1024 * 1024)).toFixed(1)} MB</span>
             {post.video_duration && <span>• {post.video_duration}s</span>}
           </div>
 
           <div>
-            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider block mb-1">
+            <span className="text-[11px] font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider block mb-1">
               Caption
             </span>
-            <p className="text-sm text-gray-200 whitespace-pre-line leading-relaxed">
+            <p className="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-line leading-relaxed font-normal">
               {post.caption}
             </p>
           </div>
 
           {post.youtube_title && (
-            <div className="pt-2 border-t border-[#272D40]">
-              <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider block mb-0.5">
+            <div className="pt-2 border-t border-gray-200 dark:border-[#272D40]">
+              <span className="text-[11px] font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider block mb-0.5">
                 YouTube Title
               </span>
-              <p className="text-xs text-indigo-300 font-medium">
+              <p className="text-xs text-indigo-700 dark:text-indigo-300 font-semibold">
                 {post.youtube_title}
               </p>
             </div>
@@ -257,9 +312,17 @@ export default function PostDetailPage() {
 
       {/* Individual Platform Targets Status */}
       <div className="space-y-3">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400">
-          Individual Platform Status
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">
+            Individual Platform Status ({post.targets?.length || 0})
+          </h2>
+          {isPostInFlight && (
+            <span className="text-[11px] text-indigo-600 dark:text-indigo-400 font-semibold flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+              Live Updates Active
+            </span>
+          )}
+        </div>
 
         {post.targets && post.targets.length > 0 ? (
           <div className="space-y-3">
@@ -292,7 +355,7 @@ export default function PostDetailPage() {
             })}
           </div>
         ) : (
-          <div className="p-6 rounded-xl bg-[#11131A] text-center text-xs text-gray-500 border border-[#1E2230]">
+          <div className="p-6 rounded-xl bg-white dark:bg-[#11131A] text-center text-xs text-gray-500 border border-gray-200 dark:border-[#1E2230]">
             No platform targets found for this post.
           </div>
         )}

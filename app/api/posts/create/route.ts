@@ -205,17 +205,19 @@ export async function POST(request: NextRequest) {
         await admin.from("post_targets").insert(targetInserts);
 
         if (postMode === "now") {
-          try {
-            await dispatchPostPublishing(post.id);
-          } catch (err) {
-            console.error(`[Background Dispatch Error post ${post.id}]`, err);
-          }
+          // Asynchronously trigger dispatch in background so the user is immediately redirected
+          // to /posts/[id] where they can view live real-time processing and published updates!
+          setTimeout(() => {
+            dispatchPostPublishing(post.id).catch((err) =>
+              console.error(`[Background Dispatch Error post ${post.id}]`, err)
+            );
+          }, 50);
         }
 
         return NextResponse.json({
           success: true,
           postId: post.id,
-          status: post.status,
+          status: "publishing",
           postMode: post.post_mode,
         });
       }
@@ -274,7 +276,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       postId: postId,
-      status: "queued",
+      status: "publishing",
       postMode: postMode,
     });
   } catch (error: any) {
