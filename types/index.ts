@@ -137,3 +137,29 @@ export interface PublishResult {
     [key: string]: any;
   };
 }
+
+export type CaptionTone =
+  | "professional"
+  | "viral"
+  | "educational"
+  | "promotional"
+  | "storytelling"
+  | "minimalist";
+
+export type CaptionLength = "punchy" | "standard" | "detailed";
+
+export interface VideoAnalysisResult {
+  videoSummary: string;
+  title: string;
+  caption: string;
+  hashtags: string[];
+  hashtagCategories: {
+    trending: string[];
+    niche: string[];
+    community: string[];
+  };
+  hook: string;
+  cta: string;
+  modelUsed?: string;
+}
+

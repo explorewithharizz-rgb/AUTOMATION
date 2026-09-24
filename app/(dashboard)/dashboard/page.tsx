@@ -251,6 +251,8 @@ export default function CreatePostPage() {
               privacyStatus={privacyStatus}
               onPrivacyStatusChange={setPrivacyStatus}
               videoFile={metadata?.file || null}
+              videoMetadata={metadata}
+              selectedPlatforms={selectedPlatforms}
             />
           </div>
 
